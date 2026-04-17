@@ -38,8 +38,8 @@
 - Knowledge of **programming**, javascript, nodejs, unofficial facebook api
 
 ## **Quick Install**
-```
-git clone https://github.com/NullShine69/BruxaBot-V1.git && cp -r BruxaBOT-V1/. . && rm -rf BruxaBot-V1
+```js
+git clone https://github.com/NullShine69/BruxaBot-V1.git && cp -r BruxaBOT-V1/.. && rm -rf BruxaBot-V1
 ```
 
 ## 📝 **Tutorial**
