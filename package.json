@@ -1,6 +1,6 @@
 {
   "name": "bruxa-bot",
-  "version": "1.5.35",
+  "version": "2.50.0",
   "description": "A simple Bot chat messenger using personal account. Made by Rakib Adil",
   "main": "index.js",
   "engines": {
