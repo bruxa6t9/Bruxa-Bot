@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BruxaBot Dashboard</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background: #0f0f0f;
+        color: #fff;
+        padding: 30px;
+      }
+      h1 {
+        color: #00e676;
+        margin-bottom: 5px;
+      }
+      .subtitle {
+        color: #aaa;
+        margin-bottom: 25px;
+        font-size: 14px;
+      }
+      .form-box {
+        background: #1a1a1a;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        border: 1px solid #2a2a2a;
+      }
+      .form-box h3 {
+        margin-bottom: 15px;
+        color: #00e676;
+      }
+      input {
+        background: #2a2a2a;
+        border: 1px solid #333;
+        color: #fff;
+        padding: 10px;
+        border-radius: 6px;
+        margin: 5px;
+        width: 220px;
+        outline: none;
+      }
+      input:focus {
+        border-color: #00e676;
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 5px;
+        font-weight: bold;
+      }
+      .btn-create {
+        background: #00e676;
+        color: #000;
+      }
+      .btn-create:hover {
+        background: #00c853;
+      }
+      .btn-delete {
+        background: #ff1744;
+        color: #fff;
+        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 5px;
+      }
+      .btn-delete:hover {
+        background: #d50000;
+      }
+      .stats-bar {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+      .stat-box {
+        background: #1a1a1a;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border: 1px solid #2a2a2a;
+        flex: 1;
+        text-align: center;
+      }
+      .stat-box h2 {
+        color: #00e676;
+        font-size: 28px;
+      }
+      .stat-box p {
+        color: #aaa;
+        font-size: 13px;
+        margin-top: 4px;
+      }
+      .users-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+        gap: 15px;
+      }
+      .user-card {
+        background: #1a1a1a;
+        border-radius: 10px;
+        padding: 18px;
+        border: 1px solid #2a2a2a;
+        transition: border 0.2s;
+      }
+      .user-card:hover {
+        border-color: #00e676;
+      }
+      .user-card h3 {
+        margin-bottom: 10px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .status {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .online {
+        background: #00e676;
+        box-shadow: 0 0 8px #00e676;
+      }
+      .offline {
+        background: #555;
+      }
+      .info {
+        font-size: 13px;
+        color: #aaa;
+        margin-top: 6px;
+      }
+      .info span {
+        color: #fff;
+      }
+      .badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: bold;
+        margin-top: 8px;
+      }
+      .badge-online {
+        background: #003d1f;
+        color: #00e676;
+        border: 1px solid #00e676;
+      }
+      .badge-offline {
+        background: #2a2a2a;
+        color: #aaa;
+        border: 1px solid #444;
+      }
+      .msg {
+        color: #00e676;
+        margin-top: 8px;
+        font-size: 13px;
+      }
+      .error {
+        color: #ff1744;
+        margin-top: 8px;
+        font-size: 13px;
+      }
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      .refresh-btn {
+        background: #1a1a1a;
+        color: #00e676;
+        border: 1px solid #00e676;
+        padding: 6px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      .no-users {
+        color: #aaa;
+        text-align: center;
+        padding: 40px;
+        background: #1a1a1a;
+        border-radius: 10px;
+      }
+      .admin-uids {
+        font-size: 12px;
+        color: #888;
+        margin-top: 4px;
+        word-break: break-all;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>👾 BruxaBot Dashboard</h1>
+    <p class="subtitle">Manage your BruxaBot users and monitor their status</p>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat-box">
+        <h2 id="totalUsers">0</h2>
+        <p>Total Users</p>
+      </div>
+      <div class="stat-box">
+        <h2 id="onlineUsers" style="color: #00e676">0</h2>
+        <p>Online Bots</p>
+      </div>
+      <div class="stat-box">
+        <h2 id="offlineUsers" style="color: #aaa">0</h2>
+        <p>Offline Bots</p>
+      </div>
+    </div>
+
+    <!-- Create User Form -->
+    <div class="form-box">
+      <h3>➕ Create New User</h3>
+      <input type="text" id="apiKey" placeholder="API Key" />
+      <button class="btn-create" onclick="createUser()">Create User</button>
+      <div id="msg"></div>
+    </div>
+
+    <!-- Users List -->
+    <div class="section-header">
+      <h3>👥 All Users</h3>
+      <button class="refresh-btn" onclick="loadUsers()">🔄 Refresh</button>
+    </div>
+    <div class="users-grid" id="usersList"></div>
+
+    <script>
+      async function loadUsers() {
+        const res = await fetch('/api/users');
+        const users = await res.json();
+        const container = document.getElementById('usersList');
+
+        // Update stats
+        document.getElementById('totalUsers').innerText = users.length;
+        document.getElementById('onlineUsers').innerText = users.filter(
+          (u) => u.status === 'online'
+        ).length;
+        document.getElementById('offlineUsers').innerText = users.filter(
+          (u) => u.status === 'offline'
+        ).length;
+
+        container.innerHTML = '';
+
+        if (users.length === 0) {
+          container.innerHTML = `<div class="no-users">No users yet. Create one above!</div>`;
+          return;
+        }
+
+        users.forEach((user) => {
+          const isOnline = user.status === 'online';
+          const lastSeen = user.lastSeen
+            ? new Date(user.lastSeen).toLocaleString()
+            : 'Never';
+          const adminUIDs = user.adminBot?.join(', ') || 'N/A';
+
+          container.innerHTML += `
+          <div class="user-card">
+            <h3>
+              <span class="status ${isOnline ? 'online' : 'offline'}"></span>
+              ${user.nickNameBot || 'Not Registered Yet'}
+            </h3>
+            <span class="badge ${isOnline ? 'badge-online' : 'badge-offline'}">
+              ${isOnline ? '🟢 Online' : '⚫ Offline'}
+            </span>
+            <div class="info">Prefix: <span>${user.prefix || 'N/A'}</span></div>
+            <div class="info">Language: <span>${user.language || 'N/A'}</span></div>
+            <div class="info">Timezone: <span>${user.timeZone || 'N/A'}</span></div>
+            <div class="info">API Key: <span>${user.apiKey}</span></div>
+            <div class="info">Used: <span>${user.usedRequests}</span> | Remaining: <span>${user.remainingRequests}</span></div>
+            <div class="info">Last Seen: <span>${lastSeen}</span></div>
+            <div class="info">Admin UIDs:</div>
+            <div class="admin-uids">${adminUIDs}</div>
+            <br>
+            <button class="btn-delete" onclick="deleteUser('${user.apiKey}')">🗑 Delete</button>
+          </div>
+        `;
+        });
+      }
+
+      async function createUser() {
+        const apiKey = document.getElementById('apiKey').value.trim();
+        const msg = document.getElementById('msg');
+
+        if (!apiKey) {
+          msg.className = 'error';
+          msg.innerText = 'API key is required!';
+          return;
+        }
+
+        const res = await fetch('/api/create-user', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ apiKey })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          msg.className = 'msg';
+          msg.innerText = '✅ User created successfully!';
+          document.getElementById('apiKey').value = '';
+          loadUsers();
+        } else {
+          msg.className = 'error';
+          msg.innerText = '❌ ' + data.error;
+        }
+      }
+
+      async function deleteUser(apiKey) {
+        if (!confirm('Delete this user?')) return;
+        await fetch(`/api/users/${apiKey}`, { method: 'DELETE' });
+        loadUsers();
+      }
+
+      // Auto refresh every 30 seconds
+      loadUsers();
+      setInterval(loadUsers, 30000);
+    </script>
+  </body>
+</html>
