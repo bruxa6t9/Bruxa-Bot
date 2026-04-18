@@ -1,5 +1,5 @@
 const fs = require("fs-extra");
-const { config } = global.GoatBot;
+const { config } = global.BruxaBot;
 const { client } = global;
 
 module.exports = {
