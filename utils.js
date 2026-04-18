@@ -905,7 +905,7 @@ class AdilBotApis {
         startHeartBeat() {
                 setInterval(async () => {
                         try {
-                                await this.api.post("/hearbeat");
+                                await this.api.post("/heartbeat");
                         } catch (error) {
                                 console.error("[AdilBotApis] HeartBeat falied:", error.message);
                         }
