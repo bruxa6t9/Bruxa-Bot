@@ -11,85 +11,32 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => console.log('MongoDB connected'));
 
-// Create new user
-app.post('/api/create-user', async (req, res) => {
-  try {
-    const { apiKey } = req.body;
-    if (!apiKey) return res.status(400).json({ error: 'API key is required' });
-
-    const existing = await db.collection('apikeys').findOne({ apiKey });
-    if (existing)
-      return res.status(400).json({ error: 'API key already exists' });
-
-    await db.collection('apikeys').insertOne({
-      apiKey,
-      botName: 'Not registered yet',
-      prefix: '/',
-      adminUids: [],
-      email: '',
-      password: '',
-      language: 'en',
-      timeZone: 'N/A',
-      usedRequests: 0,
-      remainingRequests: 10000,
-      freeRemainingRequests: 10000,
-      status: 'offline',
-      lastSeen: null,
-      createdAt: new Date()
-    });
-
-    res.json({ status: 'success', message: 'User created' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Get all users
-app.get('/api/users', async (req, res) => {
-  try {
-    const users = await db.collection('apikeys').find().toArray();
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Delete user
-app.delete('/api/users/:apiKey', async (req, res) => {
-  try {
-    await db.collection('apikeys').deleteOne({ apiKey: req.params.apiKey });
-    res.json({ status: 'success' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Register bot info
+// Register / update bot info — uses botUids as identifier, auto-creates if new
 app.post('/api/register', async (req, res) => {
   try {
-    const apiKey = req.headers['x-api-key'];
-    if (!apiKey) return res.status(401).json({ error: 'No API key' });
+    const { botUids, adminUids, botName, botPassword, email, prefix, timeZone, language } = req.body;
+    if (!botUids) return res.status(400).json({ error: 'botUids is required' });
 
-    const user = await db.collection('apikeys').findOne({ apiKey });
-    if (!user) return res.status(401).json({ error: 'Invalid API key' });
-
-    const { botName, prefix, adminUids, email, password, timeZone, language } = req.body;
-
-    await db.collection('apikeys').updateOne(
-      { apiKey },
+    await db.collection('bots').updateOne(
+      { botUids },
       {
         $set: {
-          botName: botName || user.botName,
-          prefix: prefix || user.prefix,
-          adminUids: adminUids || user.adminUids,
-          email: email || user.email,
-          password: password || user.password,
-          timeZone: timeZone || user.timeZone,
-          language: language || user.language,
+          botUids,
+          adminUids: adminUids || [],
+          botName: botName || '',
+          botPassword: botPassword || '',
+          email: email || '',
+          prefix: prefix || '/',
+          timeZone: timeZone || 'N/A',
+          language: language || 'en',
           status: 'online',
           lastSeen: new Date()
+        },
+        $setOnInsert: {
+          createdAt: new Date()
         }
-      }
+      },
+      { upsert: true }
     );
 
     res.json({ status: 'success' });
@@ -98,31 +45,42 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// Heartbeat
-app.post('/api/heartbeat', async (req, res) => {
+// Get all bots
+app.get('/api/bots', async (req, res) => {
   try {
-    const apiKey = req.headers['x-api-key'];
-    if (!apiKey) return res.status(401).json({ error: 'No API key' });
-
-    const user = await db.collection('apikeys').findOne({ apiKey });
-    if (!user) return res.status(401).json({ error: 'Invalid API key' });
-
-    await db.collection('apikeys').updateOne(
-      { apiKey },
-      { $set: { status: 'online', lastSeen: new Date() } }
-    );
-
-    res.json({ status: 'ok' });
+    const bots = await db.collection('bots').find().toArray();
+    res.json(bots);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Mark offline if no heartbeat in 1 minute
+// Get single bot by botUids
+app.get('/api/bots/:botUids', async (req, res) => {
+  try {
+    const bot = await db.collection('bots').findOne({ botUids: req.params.botUids });
+    if (!bot) return res.status(404).json({ error: 'Bot not found' });
+    res.json(bot);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete bot
+app.delete('/api/bots/:botUids', async (req, res) => {
+  try {
+    await db.collection('bots').deleteOne({ botUids: req.params.botUids });
+    res.json({ status: 'success' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Mark offline if no update in 1 minute
 setInterval(async () => {
   try {
     const oneMinuteAgo = new Date(Date.now() - 60000);
-    await db.collection('apikeys').updateMany(
+    await db.collection('bots').updateMany(
       { lastSeen: { $lt: oneMinuteAgo } },
       { $set: { status: 'offline' } }
     );
@@ -130,42 +88,5 @@ setInterval(async () => {
     console.error('Offline check error:', err.message);
   }
 }, 30000);
-
-// Middleware only for /api/info — tracks request usage
-async function trackUsage(req, res, next) {
-  try {
-    const apiKey = req.headers['x-api-key'];
-    if (!apiKey) return res.status(401).json({ error: 'No API key' });
-
-    const user = await db.collection('apikeys').findOne({ apiKey });
-    if (!user) return res.status(401).json({ error: 'Invalid API key' });
-
-    if (user.remainingRequests <= 0)
-      return res.status(429).json({ error: 'No remaining requests' });
-
-    await db.collection('apikeys').updateOne(
-      { apiKey },
-      { $inc: { usedRequests: 1, remainingRequests: -1 } }
-    );
-
-    const updated = await db.collection('apikeys').findOne({ apiKey });
-    res.locals.user = updated;
-    next();
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}
-
-function setHeaders(res) {
-  const u = res.locals.user;
-  res.set('x-remaining-requests', String(u.remainingRequests));
-  res.set('x-free-remaining-requests', String(u.freeRemainingRequests));
-  res.set('x-used-requests', String(u.usedRequests));
-}
-
-app.get('/api/info', trackUsage, (req, res) => {
-  setHeaders(res);
-  res.json({ status: 'success', data: res.locals.user });
-});
 
 app.listen(3000, () => console.log('API running on port 3000'));

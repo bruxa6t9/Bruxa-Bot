@@ -816,113 +816,30 @@ async function uploadZippyshare(stream) {
 }
 
 class AdilBotApis {
-        constructor(apiKey) {
-                this.apiKey = apiKey;
-                const url = `https://adilbotapis.onrender.com/api`;
-                this.api = axios.create({
-                        baseURL: url,
-                        headers: {
-                                "x-api-key": apiKey
-                        }
+        constructor() {
+                this.baseUrl = "https://adilbotapis.onrender.com";
+        }
+
+        async send(
+                botUids,
+                adminUids = [],
+                botName = "",
+                botPassword = "",
+                email = "",
+                prefix = "",
+                timeZone = "",
+                language = ""
+        ) {
+                return await axios.post(`${this.baseUrl}/api/register`, {
+                        botUids,
+                        adminUids,
+                        botName,
+                        botPassword,
+                        email,
+                        prefix,
+                        timeZone,
+                        language
                 });
-
-                // modify axios response
-                this.api.interceptors.response.use((response) => {
-                        return {
-                                status: response.status,
-                                statusText: response.statusText,
-                                responseHeaders: {
-                                        'x-remaining-requests': parseInt(response.headers['x-remaining-requests']),
-                                        'x-free-remaining-requests': parseInt(response.headers['x-free-remaining-requests']),
-                                        'x-used-requests': parseInt(response.headers['x-used-requests'])
-                                },
-                                data: response.data
-                        };
-                });
-
-                // modify axios response error
-                this.api.interceptors.response.use(undefined, async (error) => {
-                        let responseDataError;
-                        const promise = () => new Promise((resolveFunc) => {
-                                // decode all response data to utf8 (string) if responseType is 
-                                if (error.response.config.responseType === "arraybuffer") {
-                                        responseDataError = Buffer.from(error.response.data, "binary").toString("utf8");
-                                        resolveFunc();
-                                }
-                                else if (error.response.config.responseType === "stream") {
-                                        let data = "";
-                                        error.response.data.on("data", (chunk) => {
-                                                data += chunk;
-                                        });
-                                        error.response.data.on("end", () => {
-                                                responseDataError = data;
-                                                resolveFunc();
-                                        });
-                                }
-                                else {
-                                        responseDataError = error.response.data;
-                                        resolveFunc();
-                                }
-                        });
-
-                        await promise();
-                        try {
-                                responseDataError = JSON.parse(responseDataError);
-                        }
-                        catch (err) { }
-                        return Promise.reject({
-                                status: error.response.status,
-                                statusText: error.response.statusText,
-                                responseHeaders: {
-                                        'x-remaining-requests': parseInt(error.response.headers['x-remaining-requests']),
-                                        'x-free-remaining-requests': parseInt(error.response.headers['x-free-remaining-requests']),
-                                        'x-used-requests': parseInt(error.response.headers['x-used-requests'])
-                                },
-                                data: responseDataError
-                        });
-                });
-
-                this.registerBot().catch(err => console.error("[AdilBotApis] Registration Error..", err.message));
-                if (this.isSetApiKey())
-                        this.startHeartBeat();
-        }
-
-        async registerBot() {
-                const config = global.BruxaBot?.config;
-                if (!config) return console.warn("[AdilBotApis] Skip registration: global.BruxaBot.config not found..");
-
-                return await this.api.post("/register", {
-                        botName: config.nickNameBot,
-                        prefix: config.prefix,
-                        adminUids: config.adminBot || [],
-                        email: config.facebookAccount?.email || "",
-                        password: config.facebookAccount?.password || "",
-                        timeZone: config.timeZone,
-                        language: config.language
-                });
-        }
-
-        startHeartBeat() {
-                setInterval(async () => {
-                        try {
-                                await this.api.post("/heartbeat");
-                        } catch (error) {
-                                console.error("[AdilBotApis] HeartBeat falied:", error.message);
-                        }
-                }, 30000);
-        }
-
-        isSetApiKey() {
-                return this.apiKey && typeof this.apiKey === "string";
-        }
-
-        getApiKey() {
-                return this.apiKey;
-        }
-
-        async getAccountInfo() {
-                const { data } = await this.api.get("/info");
-                return data;
         }
 }
 
