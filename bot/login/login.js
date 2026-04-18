@@ -1,5 +1,5 @@
 // set bash title
-process.stdout.write("\x1b]2;Goat Bot V2 - Made by NTKhang modified by Rakib Adil\x1b\x5c");
+process.stdout.write("\x1b]2;Goat Bot V2 - Made by Rakib Adil\x1b\x5c");
 const defaultRequire = require;
 
 /*function decode(text) {
@@ -64,12 +64,12 @@ function centerText(text, length) {
 // logo
 const titles = [
         [
-                "██████╗  ██████╗  █████╗ ████████╗    ██╗   ██╗██████╗",
-                "██╔════╝ ██╔═══██╗██╔══██╗╚══██╔══╝    ██║   ██║╚════██╗",
-                "██║  ███╗██║   ██║███████║   ██║       ██║   ██║ █████╔╝",
-                "██║   ██║██║   ██║██╔══██║   ██║       ╚██╗ ██╔╝██╔═══╝",
-                "╚██████╔╝╚██████╔╝██║  ██║   ██║        ╚████╔╝ ███████╗",
-                "╚═════╝  ╚═════╝ ╚═╝  ╚═╝   ╚═╝         ╚═══╝  ╚══════╝"
+                "██████╗ ██████╗ ██╗   ██╗██╗  ██╗ █████╗     ██████╗  ██████╗ ████████╗",
+                "██╔══██╗██╔══██╗██║   ██║╚██╗██╔╝██╔══██╗    ██╔══██╗██╔═══██╗╚══██╔══╝",
+                "███████╗██████╔╝██║   ██║ ╚███╔╝ ███████║    ███████╗██║   ██║   ██║   ",
+                "██╔══██╗██╔══██╗██║   ██║ ██╔██╗ ██╔══██║    ██╔══██╗██║   ██║   ██║   ",
+                "██████╔╝██║  ██║╚██████╔╝██╔╝ ██╗██║  ██║    ██████╔╝╚██████╔╝   ██║   ",
+                "╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝    ╚═════╝  ╚═════╝    ╚═╝   "
         ],
         [
                 "█▀▀ █▀█ ▄▀█ ▀█▀  █▄▄ █▀█ ▀█▀  █░█ ▀█",
@@ -1119,16 +1119,19 @@ async function startBot(loginWithEmail) {
                         logColor("#f5ab00", createLine("COPYRIGHT"));
                         // —————————————————— Start-up Notification ——————————————————//
                         const { startUpNoti } = global.BruxaBot.config;
-                        if (startUpNoti.enabled) {
-                                const startMsg = `Bot is Started at ${new Date().toLocaleString()}..`
-
-                                if (startUpNoti.threadId.enabled && startUpNoti.adminId.enabled) {
-                                        const ids = startUpNoti.threadId.tid;
+                        if (startUpNoti?.enabled) {
+                                const startMsg = startUpNoti.message || `Bot is Started at ${new Date().toLocaleString()}..`;
+                                const targets = [];
+                                if (startUpNoti.threadId?.enabled && startUpNoti.threadId.tid)
+                                        targets.push(...(Array.isArray(startUpNoti.threadId.tid) ? startUpNoti.threadId.tid : [startUpNoti.threadId.tid]));
+                                if (startUpNoti.adminId?.enabled && startUpNoti.adminId.uid)
+                                        targets.push(...(Array.isArray(startUpNoti.adminId.uid) ? startUpNoti.adminId.uid : [startUpNoti.adminId.uid]));
+                                for (const target of targets) {
                                         try {
-                                                api.sendMessage(startMsg, ids)
-                                                log.info("Start-Up Notification", "start-up notification sent successful..")
+                                                await api.sendMessage(startMsg, target);
+                                                log.info("Start-Up Notification", `Notification sent to ${target}`);
                                         } catch (err) {
-                                                log.warn("Start-Up Notification", "Failed to send start-up notification..", err.message)
+                                                log.warn("Start-Up Notification", `Failed to send notification to ${target}`, err.message);
                                         }
                                 }
                         }

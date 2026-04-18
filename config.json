@@ -15,7 +15,7 @@
   "nickNameBot": "BruxaBot",
   "prefix": "/",
   "bio": {
-    "enabled": false,
+    "enabled": true,
     "bioText": "Bot is connected..",
     "updateOnce": true
   },
@@ -34,7 +34,7 @@
   "whiteListModeThread": {
     "enable": true,
     "whiteListThreadIds": [
-      "100075808585925"
+      "8364250807012864"
     ],
     "notes": "if you enable this feature, only the thread in the whiteListThreadIds list can use the bot",
     "how_it_work": "if you enable both whiteListMode and whiteListModeThread, the system will check if the user is in whiteListIds, then check if the thread is in whiteListThreadIds, if one of the conditions is true, the user can use the bot"
@@ -52,6 +52,7 @@
     "notes": "You can set it to 0 to make the typing indicator last until the bot sends a message, but this may cause some problems such as: the bot will not send a message if the typing indicator is still on, or the bot will send a message but the typing indicator will still be on, so I recommend setting it to 2000 (2 seconds) or 3000 (3 seconds)"
   },
   "startUpNoti": {
+    "enabled": true,
     "threadId": {
       "enabled": true,
       "tid": "8364250807012864"
@@ -59,7 +60,9 @@
     "adminId": {
       "enabled": false,
       "uid": ""
-    }
+    },
+    "message": "Bot is connected..",
+    "notes": "You can set the message to be sent when the bot is connected.."
   },
   "timeZone": "Asia/Dhaka",
   "dashBoard": {
