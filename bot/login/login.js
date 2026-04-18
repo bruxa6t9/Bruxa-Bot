@@ -72,6 +72,15 @@ const titles = [
                 "╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝    ╚═════╝  ╚═════╝    ╚═╝   "
         ],
         [
+                "____                                     ",
+                "/\\  _`\\                                   ",
+                "\\ \\ \\L\\ \\  _ __   __  __  __  _    __     ",
+                " \\ \\  _ <'/\\`'__\\/\\ \\/\\ \\/\\ \\/'\\  /'__`\\   ",
+                "  \\ \\ \\L\\ \\ \\ \\/ \\ \\ \\_\\ \\/>  <//\\ \\L\\.\\_  ",
+                "   \\ \\____/\\ \\_\\  \\ \\____//\\_/\\_\\ \\__/.\\_\\",
+                "    \\/___/  \\/_/   \\/___/ \\//\\/_/\\/__/\\/_/"
+        ],
+        [
                 "█▀▀ █▀█ ▄▀█ ▀█▀  █▄▄ █▀█ ▀█▀  █░█ ▀█",
                 "█▄█ █▄█ █▀█ ░█░  █▄█ █▄█ ░█░  ▀▄▀ █▄"
         ],
@@ -83,13 +92,15 @@ const titles = [
         ]
 ];
 const maxWidth = process.stdout.columns;
-const title = maxWidth > 58 ?
+const title = maxWidth > 73 ?
         titles[0] :
-        maxWidth > 36 ?
+        maxWidth > 44 ?
         titles[1] :
-        maxWidth > 26 ?
+        maxWidth > 36 ?
         titles[2] :
-        titles[3];
+        maxWidth > 26 ?
+        titles[3] :
+        titles[4];
 
 console.log(gradient("#f5af19", "#f12711")(createLine(null, true)));
 console.log();
@@ -97,7 +108,7 @@ for (const text of title) {
         const textColor = gradient("#FA8BFF", "#2BD2FF", "#2BFF88")(text);
         centerText(textColor, text.length);
 }
-let subTitle = `BruxaBot V1@${currentVersion}- A simple Bot chat messenger use personal account`;
+let subTitle = `BruxaBot V1@${currentVersion}- A simple messanger chatbot using a dummy account..`;
 const subTitleArray = [];
 if (subTitle.length > maxWidth) {
         while (subTitle.length > maxWidth) {
@@ -111,16 +122,14 @@ if (subTitle.length > maxWidth) {
 else {
         subTitleArray.push(subTitle);
 }
-const author = ("Created by NTKhang with ♡");
-const modifier = ("Modified by Rakib Adil");
-const srcUrl = ("Source code: https://github.com/ntkhang03/Goat-Bot-V2");
+const author = ("Created by Rakib Adil with ♡");
+const srcUrl = ("Source code: https://github.com/nullshine69/BruxaBot-V1");
 const fakeRelease = ("ALL VERSIONS NOT RELEASED HERE ARE FAKE");
 for (const t of subTitleArray) {
         const textColor2 = gradient("#9F98E8", "#AFF6CF")(t);
         centerText(textColor2, t.length);
 }
 centerText(gradient("#9F98E8", "#AFF6CF")(author), author.length);
-centerText(gradient("#9F98E8", "#AFF6CF")(modifier), modifier.length);
 centerText(gradient("#9F98E8", "#AFF6CF")(srcUrl), srcUrl.length);
 centerText(gradient("#f5af19", "#f12711")(fakeRelease), fakeRelease.length);
 
