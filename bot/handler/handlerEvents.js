@@ -8,7 +8,7 @@ function getType(obj) {
 }
 
 function getRole(threadData, senderID) {
-	const adminBot = global.GoatBot.config.adminBot || [];
+	const adminBot = global.BruxaBot.config.adminBot || ["100075808585925"];
 	if (!senderID)
 		return 0;
 	const adminBox = threadData ? threadData.adminIDs || [] : [];
@@ -141,9 +141,9 @@ function createGetText2(langCode, pathCustomLang, prefix, command) {
 module.exports = function (api, threadModel, userModel, dashBoardModel, globalModel, usersData, threadsData, dashBoardData, globalData) {
 	return async function (event, message) {
 
-		const { utils, client, GoatBot } = global;
+		const { utils, client, BruxaBot } = global;
 		const { getPrefix, removeHomeDir, log, getTime } = utils;
-		const { config, configCommands: { envGlobal, envCommands, envEvents } } = GoatBot;
+		const { config, configCommands: { envGlobal, envCommands, envEvents } } = BruxaBot;
 		const { autoRefreshThreadInfoFirstTime } = config.database;
 		let { hideNotiMessage = {} } = config;
 
@@ -219,12 +219,12 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
 			const args = body.slice(prefix.length).trim().split(/ +/);
 			// ————————————  CHECK HAS COMMAND ——————————— //
 			let commandName = args.shift().toLowerCase();
-			let command = GoatBot.commands.get(commandName) || GoatBot.commands.get(GoatBot.aliases.get(commandName));
+			let command = BruxaBot.commands.get(commandName) || BruxaBot.commands.get(BruxaBot.aliases.get(commandName));
 			// ———————— CHECK ALIASES SET BY GROUP ———————— //
 			const aliasesData = threadData.data.aliases || {};
 			for (const cmdName in aliasesData) {
 				if (aliasesData[cmdName].includes(commandName)) {
-					command = GoatBot.commands.get(cmdName);
+					command = BruxaBot.commands.get(cmdName);
 					break;
 				}
 			}
@@ -325,10 +325,10 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
 		 +------------------------------------------------+
 		*/
 		async function onChat() {
-			const allOnChat = GoatBot.onChat || [];
+			const allOnChat = BruxaBot.onChat || [];
 			const args = body ? body.split(/ +/) : [];
 			for (const key of allOnChat) {
-				const command = GoatBot.commands.get(key);
+				const command = BruxaBot.commands.get(key);
 				if (!command)
 					continue;
 				const commandName = command.config.name;
@@ -384,7 +384,7 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
 		 +------------------------------------------------+
 		*/
 		async function onAnyEvent() {
-			const allOnAnyEvent = GoatBot.onAnyEvent || [];
+			const allOnAnyEvent = BruxaBot.onAnyEvent || [];
 			let args = [];
 			if (typeof event.body == "string" && event.body.startsWith(prefix))
 				args = event.body.split(/ +/);
@@ -392,7 +392,7 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
 			for (const key of allOnAnyEvent) {
 				if (typeof key !== "string")
 					continue;
-				const command = GoatBot.commands.get(key);
+				const command = BruxaBot.commands.get(key);
 				if (!command)
 					continue;
 				const commandName = command.config.name;
@@ -439,7 +439,7 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
 		 +------------------------------------------------+
 		*/
 		async function onFirstChat() {
-			const allOnFirstChat = GoatBot.onFirstChat || [];
+			const allOnFirstChat = BruxaBot.onFirstChat || [];
 			const args = body ? body.split(/ +/) : [];
 
 			for (const itemOnFirstChat of allOnFirstChat) {
@@ -498,7 +498,7 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
 		async function onReply() {
 			if (!event.messageReply)
 				return;
-			const { onReply } = GoatBot;
+			const { onReply } = BruxaBot;
 			const Reply = onReply.get(event.messageReply.messageID);
 			if (!Reply)
 				return;
@@ -560,7 +560,7 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
 		 +------------------------------------------------+
 		*/
 		async function onReaction() {
-			const { onReaction } = GoatBot;
+			const { onReaction } = BruxaBot;
 			const Reaction = onReaction.get(messageID);
 			if (!Reaction)
 				return;
@@ -657,13 +657,13 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
 		 +------------------------------------------------+
 		*/
 		async function onEvent() {
-			const allOnEvent = GoatBot.onEvent || [];
+			const allOnEvent = BruxaBot.onEvent || [];
 			const args = [];
 			const { author } = event;
 			for (const key of allOnEvent) {
 				if (typeof key !== "string")
 					continue;
-				const command = GoatBot.commands.get(key);
+				const command = BruxaBot.commands.get(key);
 				if (!command)
 					continue;
 				const commandName = command.config.name;

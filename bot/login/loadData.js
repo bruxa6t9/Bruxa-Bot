@@ -2,14 +2,14 @@ const chalk = require('chalk');
 const path = require('path');
 const { log, createOraDots, getText } = global.utils;
 
-module.exports = async function (api, createLine) {
+module.exports = async function(api, createLine) {
 	// ———————————————————— LOAD DATA ———————————————————— //
 	console.log(chalk.hex("#f5ab00")(createLine("DATABASE")));
 	const controller = await require(path.join(__dirname, '..', '..', 'database/controller/index.js'))(api); // data is loaded here
 	const { threadModel, userModel, dashBoardModel, globalModel, threadsData, usersData, dashBoardData, globalData, sequelize } = controller;
 	log.info('DATABASE', getText('loadData', 'loadThreadDataSuccess', global.db.allThreadData.filter(t => t.threadID.toString().length > 15).length));
 	log.info('DATABASE', getText('loadData', 'loadUserDataSuccess', global.db.allUserData.length));
-	if (api && global.GoatBot.config.database.autoSyncWhenStart == true) {
+	if (api && global.BruxaBot.config.database.autoSyncWhenStart == true) {
 		console.log(chalk.hex("#f5ab00")(createLine("AUTO SYNC")));
 		const spin = createOraDots(getText('loadData', 'refreshingThreadData'));
 		try {
@@ -53,7 +53,7 @@ module.exports = async function (api, createLine) {
 		}
 		finally {
 			api.setOptions({
-				logLevel: global.GoatBot.config.optionsFca.logLevel
+				logLevel: global.BruxaBot.config.optionsFca.logLevel
 			});
 		}
 	}
@@ -69,4 +69,4 @@ module.exports = async function (api, createLine) {
 		globalData,
 		sequelize
 	};
-};
+};      

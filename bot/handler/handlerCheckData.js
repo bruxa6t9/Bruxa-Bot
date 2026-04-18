@@ -1,5 +1,5 @@
-const { db, utils, GoatBot } = global;
-const { config } = GoatBot;
+const { db, utils, BruxaBot } = global;
+const { config } = BruxaBot;
 const { log, getText } = utils;
 const { creatingThreadData, creatingUserData } = global.client.database;
 

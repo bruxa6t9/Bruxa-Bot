@@ -24,7 +24,7 @@
     "ignoreCommand": []
   },
   "adminBot": [
-    "100075808585925"
+    "100042067216561"
   ],
   "whiteListMode": {
     "enable": false,
@@ -54,7 +54,7 @@
   "startUpNoti": {
     "threadId": {
       "enabled": true,
-      "tid": "100075808585925"
+      "tid": "8364250807012864"
     },
     "adminId": {
       "enabled": false,
@@ -73,7 +73,7 @@
     "socket": {
       "enable": true,
       "channelName": "uptime",
-      "verifyToken": ""
+      "verifyToken": "stbotkey"
     }
   },
   "autoRestart": {

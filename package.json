@@ -8,6 +8,7 @@
     "npm": ">=7.0.0"
   },
   "dependencies": {
+    "@distube/ytdl-core": "^4.16.12",
     "@dongdev/fca-unofficial": "^3.0.31",
     "axios": "^1.13.4",
     "bcrypt": "^5.0.1",

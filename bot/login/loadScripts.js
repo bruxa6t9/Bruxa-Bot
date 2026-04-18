@@ -9,7 +9,7 @@ const exec = (cmd, options) => new Promise((resolve, reject) => {
 });
 const { log, loading, getText, colors, removeHomeDir } = global.utils;
 const { GoatBot } = global;
-const { configCommands } = GoatBot;
+const { configCommands } = BruxaBot;
 const regExpCheckPackage = /require(\s+|)\((\s+|)[`'"]([^`'"]+)[`'"](\s+|)\)/g;
 const packageAlready = [];
 // const spinner = '\\|/-';
@@ -29,10 +29,10 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 		for (const data of aliasesData) {
 			const { aliases, commandName } = data;
 			for (const alias of aliases)
-				if (GoatBot.aliases.has(alias))
+				if (BruxaBot.aliases.has(alias))
 					throw new Error(`Alias "${alias}" already exists in command "${commandName}"`);
 				else
-					GoatBot.aliases.set(alias, commandName);
+					BruxaBot.aliases.set(alias, commandName);
 		}
 	}
 	const folders = ["cmds", "events"];
@@ -129,8 +129,8 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 					throw new Error(`onStart of ${text} undefined`);
 				if (typeof command.onStart !== "function")
 					throw new Error(`onStart of ${text} must be a function`);
-				if (GoatBot[setMap].has(commandName))
-					throw new Error(`${text} "${commandName}" already exists with file "${removeHomeDir(GoatBot[setMap].get(commandName).location || "")}"`);
+				if (BruxaBot[setMap].has(commandName))
+					throw new Error(`${text} "${commandName}" already exists with file "${removeHomeDir(BruxaBot[setMap].get(commandName).location || "")}"`);
 				const { onFirstChat, onChat, onLoad, onEvent, onAnyEvent } = command;
 				const { envGlobal, envConfig } = configCommand;
 				const { aliases } = configCommand;
@@ -142,12 +142,12 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 					for (const alias of aliases) {
 						if (aliases.filter(item => item == alias).length > 1)
 							throw new Error(`alias "${alias}" duplicate in ${text} "${commandName}" with file "${removeHomeDir(pathCommand)}"`);
-						if (GoatBot.aliases.has(alias))
-							throw new Error(`alias "${alias}" already exists in ${text} "${GoatBot.aliases.get(alias)}" with file "${removeHomeDir(GoatBot[setMap].get(GoatBot.aliases.get(alias))?.location || "")}"`);
+						if (BruxaBot.aliases.has(alias))
+							throw new Error(`alias "${alias}" already exists in ${text} "${BruxaBot.aliases.get(alias)}" with file "${removeHomeDir(BruxaBot[setMap].get(BruxaBot.aliases.get(alias))?.location || "")}"`);
 						validAliases.push(alias);
 					}
 					for (const alias of validAliases)
-						GoatBot.aliases.set(alias, commandName);
+						BruxaBot.aliases.set(alias, commandName);
 				}
 				// ——————————————— CHECK ENV GLOBAL ——————————————— //
 				if (envGlobal) {
@@ -188,22 +188,22 @@ module.exports = async function (api, threadModel, userModel, dashBoardModel, gl
 				}
 				// ——————————————— CHECK RUN ANYTIME ——————————————— //
 				if (onChat)
-					GoatBot.onChat.push(commandName);
+					BruxaBot.onChat.push(commandName);
 				// ——————————————— CHECK ONFIRSTCHAT ——————————————— //
 				if (onFirstChat)
-					GoatBot.onFirstChat.push({ commandName, threadIDsChattedFirstTime: [] });
+					BruxaBot.onFirstChat.push({ commandName, threadIDsChattedFirstTime: [] });
 				// ————————————————— CHECK ONEVENT ————————————————— //
 				if (onEvent)
-					GoatBot.onEvent.push(commandName);
+					BruxaBot.onEvent.push(commandName);
 				// ———————————————— CHECK ONANYEVENT ———————————————— //
 				if (onAnyEvent)
-					GoatBot.onAnyEvent.push(commandName);
+					BruxaBot.onAnyEvent.push(commandName);
 				// —————————————— IMPORT TO GLOBALGOAT —————————————— //
-				GoatBot[setMap].set(commandName.toLowerCase(), command);
+				BruxaBot[setMap].set(commandName.toLowerCase(), command);
 				commandLoadSuccess++;
 				// ————————————————— COMPARE COMMAND (removed in open source) ————————————————— //
 
-				global.GoatBot[folderModules == "cmds" ? "commandFilesPath" : "eventCommandsFilesPath"].push({
+				global.BruxaBot[folderModules == "cmds" ? "commandFilesPath" : "eventCommandsFilesPath"].push({
 					// filePath: pathCommand,
 					filePath: path.normalize(pathCommand),
 					commandName: [commandName, ...validAliases]

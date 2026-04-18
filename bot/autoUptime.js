@@ -1,12 +1,12 @@
 const axios = require('axios');
-const { config } = global.GoatBot;
+const { config } = global.BruxaBot;
 const { log, getText } = global.utils;
 if (global.timeOutUptime != undefined)
 	clearTimeout(global.timeOutUptime);
 if (!config.autoUptime.enable)
 	return;
 
-const PORT = config.dashBoard?.port || (!isNaN(config.serverUptime.port) && config.serverUptime.port) || 3001;
+const PORT = config.dashBoard?.port || (!isNaN(config.serverUptime.port) && config.serverUptime.port) || 10000;
 
 let myUrl = config.autoUptime.url || `https://${process.env.REPL_OWNER
 	? `${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
