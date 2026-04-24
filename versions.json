@@ -78,5 +78,25 @@
       "scripts/cmds/shell.js": "added shell command to execute shell commands..",
       "scripts/cmds/shizuka.js": "added shizuka to chat with shizuka.."
     }
+  },
+  {
+    "version": " 1.0.8",
+    "updateFiles": {
+      "bot/login/login.js": "fixed createLine problem and added title show on of option and more",
+      "config.json": "added festute, showTitle true/false"
+      "scripts/cmds/shizuka.js": "fixed onReply",
+      "bot/handler/handlerEvents.js": "some unknown code added..",
+      "scripts/cmds/balance.js": "updated to new version", 
+      "scripts/cmds/prefix.js": "",
+    },
+    "addFiles": {
+      "scripts/cmds/accept.js": "add accept command for accept friemd request..",
+      "languages/getMsgs.js": "add some lang for commands..",
+      "scripts/cmds/spy.js": "add spy cmd for spy user profile",
+      "scripts/cmds/addagc.js": "add addagc cmd to join the specific gc with tid",
+      "scripts/cmds/imgbb.js": "add imgbb cmd to upload images to imgbb",
+      "scripts/cmds/wlt.js": "add or remove gc from whitelist thread..",
+      "scripts/cmds/slot.js": "add slot cmd to play slot game.."
+    }
   }
 ]

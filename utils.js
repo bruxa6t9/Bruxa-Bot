@@ -9,14 +9,13 @@ const agent = new https.Agent({
 const moment = require("moment-timezone");
 const mimeDB = require("mime-db");
 const _ = require("lodash");
+const { config } = global.BruxaBot;
 const ora = require("ora");
 const log = require("./logger/log.js"); // asia/dhaka
 const { isHexColor, colors } = require("./func/colors.js");
 const Prism = require("./func/prism.js");
 const { threadId } = require("worker_threads");
 const { resolve } = require("dns");
-
-const { config } = global.BruxaBot;
 
 const word = [
         'A', 'Á', 'À', 'Ả', 'Ã', 'Ạ', 'a', 'á', 'à', 'ả', 'ã', 'ạ',

@@ -1,6 +1,6 @@
 {
   "name": "bruxa-bot",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "A simple Bot chat messenger using personal account. Made by Rakib Adil",
   "main": "index.js",
   "engines": {
@@ -51,6 +51,7 @@
     "sequelize": "^6.19.0",
     "sharp": "^0.34.5",
     "socket.io": "^4.5.1",
+    "socket.io-client": "^4.8.3",
     "sqlite3": "^5.0.5",
     "srod-v2": "^1.0.2",
     "st-shazam": "^1.0.1",
