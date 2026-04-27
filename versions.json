@@ -141,7 +141,7 @@
     },
     "addFiles": {
       "scripts/cmds/pp.js": "get users profile pic or self..",
-      "scripts/cmds/whitelistonly": "added white list user only cmd..",
+      "scripts/cmds/whitelistonly.js": "added white list user only cmd..",
       "scripts/cmds/waifu.js": "added waifu cmd.."
     }
   }
