@@ -9,7 +9,7 @@ const path = defaultRequire("path");
 const readline = defaultRequire("readline");
 const fs = defaultRequire("fs-extra");
 const toptp = defaultRequire("totp-generator");
-const login = defaultRequire("stfca");
+const login = defaultRequire("@bruxa/stfca");
 const qr = new (defaultRequire("qrcode-reader"))();
 const Canvas = defaultRequire("canvas");
 
@@ -490,7 +490,7 @@ async function startBot(loginWithEmail) {
     );
 
     const { data: npmData } = await axios.get(
-      "https://registry.npmjs.org/stfca/latest",
+      "https://registry.npmjs.org/@bruxa/stfca/latest",
     );
     const latestVersion = npmData.version;
     const userPkg = existsSync(path.join(process.cwd(), "package.json"))
@@ -499,7 +499,7 @@ async function startBot(loginWithEmail) {
         )
       : {};
     const installedVersion =
-      (userPkg.dependencies?.stfca || "").replace(/[\^~]/g, "") ||
+      (userPkg.dependencies?.['@bruxa/stfca'] || "").replace(/[\^~]/g, "") ||
       currentVersion;
 
     if (latestVersion !== installedVersion) {
@@ -510,11 +510,11 @@ async function startBot(loginWithEmail) {
       );
       console.log(colors.hex("#00d9ff")("📦 Updating..."));
       require("child_process").execSync(
-        `npm install stfca@${latestVersion} --save`,
+        `npm install @bruxa/stfca@${latestVersion} --save`,
         { cwd: process.cwd(), stdio: "inherit" },
       );
-      if (userPkg.dependencies?.stfca) {
-        userPkg.dependencies.stfca = `^${latestVersion}`;
+      if (userPkg.dependencies?.['@bruxa/stfca']) {
+        userPkg.dependencies.['@bruxa/stfca'] = `^${latestVersion}`;
         writeFileSync(
           path.join(process.cwd(), "package.json"),
           JSON.stringify(userPkg, null, 2),

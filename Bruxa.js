@@ -70,6 +70,8 @@ global.BruxaBot = {
 	botID: null // store bot id
 };
 
+global.GoatBot = global.BruxaBot;
+
 // Initialize update tracking before async operations
 global.BruxaBot.updateAvailable = { hasUpdate: false, newVersion: null };
 global.BruxaBot.updateRefuseUntil = null;

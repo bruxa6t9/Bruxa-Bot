@@ -1,0 +1,154 @@
+# index.js
+Bruxa.newVersionDetected=আপনি %1 ভার্সন ব্যবহার করছেন, সর্বশেষ ভার্সন %2। বট ভালোভাবে চালাতে কনসোল/cmd এ এই কমান্ড লিখে আপডেট করুন: %3
+Bruxa.autoRestart1=%1 পর বট অটো রিস্টার্ট হবে
+Bruxa.autoRestart2=ক্রন জব দিয়ে বট রিস্টার্ট হবে: %1
+Bruxa.googleApiTokenExpired=Google API refresh token এক্সপায়ার্ড বা বাতিল হয়েছে, নতুন টোকেন নিন: https://developers.google.com/oauthplayground/
+
+# bot/login.js
+login.currentlyLogged=লগইন চলছে...
+login.notFoundDirAccount=%1 ফাইল পাওয়া যায়নি
+login.loginToken=Access token দিয়ে লগইন
+login.loginCookieString=Cookie string দিয়ে লগইন
+login.loginCookieNetscape=Netscape cookie দিয়ে লগইন
+login.loginCookieArray=Cookie array দিয়ে লগইন
+login.loginPassword=ইমেইল ও পাসওয়ার্ড দিয়ে লগইন...
+login.accountError=পুরো permission এর token %1 আকারে দিন, অথবা string আকারে cookie %2 দিন, অথবা array আকারে cookie দিন:\n[\n { name: %3, value: %4 },\n { name: %5, value: %6 }\n]\n অথবা\n[\n { key: %3, value: %4 },\n { key: %5, value: %6 }\n]\n ফাইল: %7 এ বসান
+login.cannotFindAccount=ফেসবুক অ্যাকাউন্ট পাওয়া যায়নি, নিচের যেকোনো একটি বেছে নিন (নাম্বার লিখে Enter দিন বা Up/Down চেপে Enter দিন):
+login.chooseAccount=ইমেইল ও পাসওয়ার্ড দিয়ে লগইন
+login.chooseToken=Full permission token দিয়ে লগইন
+login.chooseCookieString=Cookie string দিয়ে লগইন
+login.chooseCookieArray=Cookie array দিয়ে লগইন
+login.loginWith=আপনি বেছে নিয়েছেন: %1
+login.inputEmail=> আপনার ফেসবুক ইমেইল/আইডি/নাম্বার লিখুন:
+login.inputPassword=> পাসওয়ার্ড লিখুন:
+login.input2FA=> 2FA কোড লিখুন (2FA না থাকলে ফাঁকা রাখুন):
+login.inputToken=> Full permission token লিখুন (EAAAA দিয়ে শুরু):
+login.inputCookieString=> Cookie string দিন:
+login.inputCookieArray=> Cookie array দিন:
+login.refreshCookie=Cookie রিফ্রেশ হচ্ছে...
+login.refreshCookieError=Cookie রিফ্রেশ করতে সমস্যা হয়েছে
+login.refreshCookieSuccess=Cookie সফলভাবে রিফ্রেশ হয়েছে, নতুন cookie ব্যবহার করতে বট রিস্টার্ট দিন
+login.refreshCookieWarning=আপনি অটো cookie রিফ্রেশ অন করেছেন, কিন্তু config.json এ ইমেইল ও পাসওয়ার্ড সেট করেননি
+login.tokenError=Token অবৈধ বা এক্সপায়ার্ড। %1 ফরম্যাটে token %2 ফাইলে দিন
+login.cookieError=Cookie অবৈধ বা এক্সপায়ার্ড।
+login.loginPasswordError=config.json এর ইমেইল-পাসওয়ার্ড দিয়ে লগইন করতে সমস্যা হয়েছে
+login.loginSuccess=লগইন সফল হয়েছে
+login.loginError=সাইন ইন করতে সমস্যা হয়েছে
+login.openDashboardSuccess=বট ম্যানেজমেন্ট পেজ সফলভাবে খুলেছে
+login.openDashboardError=বট ম্যানেজমেন্ট পেজ খুলতে সমস্যা হয়েছে
+login.changeGbanData=DATA পরিবর্তন হয়েছে, এখন বট চালু করা যাবে না
+login.errorNoti=মেসেজ আনতে সমস্যা হয়েছে
+login.refreshFbstateSuccess=%1 ফাইল সফলভাবে রিফ্রেশ হয়েছে
+login.refreshFbstateError=%1 ফাইল রিফ্রেশ করতে সমস্যা হয়েছে
+login.youAreBanned=আপনাকে Bruxa-Bot প্রজেক্ট থেকে ব্যান করা হয়েছে
+login.runBot=বট সফলভাবে চালু হয়েছে, ইউজারের মেসেজ রিসিভ করা শুরু করবে
+login.notLoggedIn=সমস্যা হয়েছে, ফেসবুক অ্যাকাউন্ট আবার চেক করুন
+login.callBackError=listenMqtt callback করতে সমস্যা হয়েছে
+login.userBanned=বট ব্যবহার করা থেকে আপনাকে ব্যান করা হয়েছে!!
+login.checkGbanError=GBAN চেক করতে সমস্যা, সোর্স লেটেস্ট ভার্সনে আপডেট করুন (cmd খুলে লিখুন: node update)
+login.gbanMessage=আপনাকে %1 তারিখে Bruxa-Bot প্রজেক্ট থেকে ব্যান করা হয়েছে\nকারণ: %2\n» সময়: %3
+login.gbanMessageToDate=আপনাকে %1 তারিখে Bruxa-Bot প্রজেক্ট থেকে ব্যান করা হয়েছে\nকারণ: %2\n» সময়: %3\n» মেয়াদ: %4 পর্যন্ত
+login.gbanAdminMessage=ইউজার %1 কে %2 তারিখে Bruxa-Bot প্রজেক্ট থেকে ব্যান করা হয়েছে\nকারণ: %3
+login.openServerUptimeSuccess=🚀 Uptime সার্ভার চালু হয়েছে: %1
+login.openServerUptimeError=সমস্যা হয়েছে, uptime সার্ভার খোলা যায়নি
+login.restartListenMessage=প্রতি %1 পর ListenMQTT রিস্টার্ট চালু আছে
+login.stopRestartListenMessage=ListenMQTT রিস্টার্ট বন্ধ করা হয়েছে
+login.restartListenMessageError=ListenMQTT রিস্টার্ট করতে সমস্যা হয়েছে
+login.restartListenMessage2=ListenMQTT সফলভাবে রিস্টার্ট হয়েছে
+login.refreshCookieAfter=%1 পর cookie রিফ্রেশ হবে
+login.listenMqttClose=ListenMQTT বন্ধ হয়েছে
+login.listenMqttCloseByUser=ইউজার ListenMQTT বন্ধ করেছে
+login.retryCheckLiveCookie=Cookie চেক আবার চেষ্টা করা হচ্ছে... %1
+login.startBotSuccess=বট সফলভাবে চালু হয়েছে, ইউজারের মেসেজ রিসিভ করা শুরু করবে
+version.tooOldVersion=আপনি Bruxa-Bot এর অনেক পুরাতন ভার্সন ব্যবহার করছেন, লেটেস্ট ভার্সনে আপডেট করুন। cmd/terminal এ লিখুন: %1
+
+# bot/custom.js
+custom.refreshedFb_dtsg=fb_dtsg ও jazoest সফলভাবে রিফ্রেশ হয়েছে
+custom.refreshedFb_dtsgError=fb_dtsg ও jazoest রিফ্রেশ করতে সমস্যা হয়েছে
+
+# bot/login/loadData.js
+loadData.loadThreadDataSuccess=%1 গ্রুপের ডাটা সফলভাবে লোড হয়েছে!
+loadData.loadUserDataSuccess=%1 ইউজারের ডাটা সফলভাবে লোড হয়েছে!
+loadData.refreshingThreadData=গ্রুপের তথ্য আপডেট করা হচ্ছে...
+loadData.refreshThreadDataSuccess=%1 গ্রুপের তথ্য আপডেট হয়েছে!
+loadData.refreshThreadDataError=গ্রুপের তথ্য আপডেট করতে সমস্যা হয়েছে!
+
+# bot/login/loadScripts.js
+loadScripts.loadScriptsError=%1 ফাইল লোড করতে সমস্যা হয়েছে:
+loadScripts.loadScriptsNotMatchOrigin=%1 ফাইল গিটহাবের অরিজিনাল ফাইলের সাথে মিলছে না, নিশ্চিত হোন কমান্ড ফাইলগুলো নিরাপদ কিনা:
+loadScripts.NOT_FOUND=অরিজিনাল সোর্স কোডে পাওয়া যায়নি:
+loadScripts.NOT_MATCH=অরিজিনাল সোর্স কোডের সাথে মিলছে না:
+
+# bot/login/socketIO.js
+socketIO.connected=socket.io সার্ভারে কানেক্ট হয়েছে
+socketIO.error=socket.io সার্ভারে কানেক্ট করতে সমস্যা হয়েছে
+
+# bot/handler/handlerCheckData.js
+handlerCheckData.cantCreateThread='%1' আইডির গ্রুপ ডাটাবেজে লেখা যাচ্ছে না!
+handlerCheckData.cantCreateUser='%1' আইডির ইউজার ডাটাবেজে লেখা যাচ্ছে না!
+
+# bot/handler/handlerEvents.js
+handlerEvents.userBanned=বট ব্যবহার থেকে আপনাকে ব্যান করা হয়েছে\n» কারণ: %1\n» সময়: %2\n» ইউজার আইডি: %3
+handlerEvents.threadBanned=এই গ্রুপ বট ব্যবহার থেকে ব্যান করা হয়েছে\n» কারণ: %1\n» সময়: %2\n» থ্রেড আইডি: %3
+handlerEvents.onlyAdminBox=এই গ্রুপে শুধু এডমিনরাই বট ব্যবহার করতে পারবে
+handlerEvents.onlyAdminBot=❌ | এখন শুধু বটের এডমিন বট ব্যবহার করতে পারবে
+handlerEvents.commandNotFound="%1" কমান্ড নেই, সব কমান্ড দেখতে %2help লিখুন
+handlerEvents.commandNotFound2=কমান্ডটি নেই, সব কমান্ড দেখতে %1help লিখুন
+handlerEvents.commandSyntaxError=কমান্ডের সিনট্যাক্স ভুল, কমান্ড ব্যবহারের নিয়ম দেখতে %1help %2 লিখুন
+handlerEvents.onlyAdmin=❌ | শুধু গ্রুপ এডমিন "%1" কমান্ড ব্যবহার করতে পারবে
+handlerEvents.onlyAdminToUseOnReply=❌ | শুধু গ্রুপ এডমিন "%1" কমান্ডের reply ফাংশন ব্যবহার করতে পারবে
+handlerEvents.onlyAdminToUseOnReaction=❌ | শুধু গ্রুপ এডমিন "%1" কমান্ডের reaction ফাংশন ব্যবহার করতে পারবে
+handlerEvents.onlyAdminBot2=❌ | শুধু বটের এডমিন "%1" কমান্ড ব্যবহার করতে পারবে
+handlerEvents.onlyAdminBot2ToUseOnReply=❌ | শুধু বটের এডমিন "%1" কমান্ডের reply ফাংশন ব্যবহার করতে পারবে
+handlerEvents.onlyAdminBot2ToUseOnReaction=❌ | শুধু বটের এডমিন "%1" কমান্ডের reaction ফাংশন ব্যবহার করতে পারবে
+handlerEvents.waitingForCommand=⏱ এই কমান্ড ব্যবহারের কুলডাউন চলছে, %1s পর আবার চেষ্টা করুন
+handlerEvents.errorOccurred=❌ [ %1 ]\n"%2" কমান্ডে সমস্যা হয়েছে\n%3
+handlerEvents.errorOccurred2=❌ [ %1 ]\n"%2" কমান্ডের onChat এ সমস্যা হয়েছে\n%3
+handlerEvents.errorOccurred3=❌ [ %1 ]\n"%2" কমান্ডের onReply করতে সমস্যা হয়েছে\n%3
+handlerEvents.errorOccurred4=❌ [ %1 ]\n"%2" কমান্ডের onReaction করতে সমস্যা হয়েছে\n%3
+handlerEvents.errorOccurred5=❌ [ %1 ]\n"%2" কমান্ডের onEvent করতে সমস্যা হয়েছে\n%3
+handlerEvents.errorOccurred6=❌ [ %1 ]\n"%2" কমান্ডের onEvent করতে সমস্যা হয়েছে\n%3
+handlerEvents.errorOccurred7=❌ [ %1 ]\n"%2" কমান্ডের onAnyEvent করতে সমস্যা হয়েছে\n%3
+handlerEvents.cannotFindCommandName=❌ এই reply চালানোর জন্য কমান্ডের নাম পাওয়া যায়নি!
+handlerEvents.cannotFindCommand=❌ এই reply চালানোর জন্য "%1" কমান্ড পাওয়া যায়নি!
+
+# bot/autoUptime.js
+autoUptime.autoUptimeTurnedOn=AutoUptime মোড চালু হয়েছে
+
+# database/controller/index.js
+indexController.connectingMongoDB=MongoDB ডাটাবেজে কানেক্ট হচ্ছে...
+indexController.connectMongoDBSuccess=MongoDB ডাটাবেজ সফলভাবে কানেক্ট হয়েছে!
+indexController.connectMongoDBError=MongoDB ডাটাবেজ কানেক্ট করতে সমস্যা:
+indexController.connectingMySQL=SQLITE ডাটাবেজে কানেক্ট হচ্ছে...
+indexController.connectMySQLSuccess=SQLITE ডাটাবেজ সফলভাবে কানেক্ট হয়েছে!
+indexController.connectMySQLError=SQLITE ডাটাবেজ কানেক্ট করতে সমস্যা:
+
+# updater.js
+updater.updateTooFast=এরর ছাড়া আপডেট করতে লাস্ট কমিটের পর কমপক্ষে 5 মিনিট অপেক্ষা করুন, বাকি আছে %1 মিনিট %2 সেকেন্ড
+updater.latestVersion=আপনি লেটেস্ট ভার্সন ব্যবহার করছেন
+updater.cantFindVersion=আপনি undefined ভার্সন (%1) ব্যবহার করছেন, package.json ফাইল আবার চেক করুন
+updater.newVersions=আপডেট করার জন্য %1 টি নতুন ভার্সন আছে, আপডেট শুরু হচ্ছে...
+updater.updateSuccess=আপডেট সফল হয়েছে%1
+updater.configChanged=%1 ফাইল পরিবর্তন হয়েছে, config.json ফাইল আবার চেক করুন
+updater.installingPackages=বটের জন্য dependency ইন্সটল হচ্ছে...
+updater.installSuccess=Dependency সফলভাবে ইন্সটল হয়েছে, নতুন ভার্সন ব্যবহার করতে বট রিস্টার্ট দিন
+updater.backupSuccess=পরিবর্তিত ফাইল সফলভাবে ব্যাকআপ হয়েছে, দেখুন %1 ফোল্ডারে
+updater.restartToApply=নতুন ভার্সন চালু করতে বট রিস্টার্ট দিন
+updater.skipFile=%1 ফাইলের নতুন ভার্সন আছে, কিন্তু আপনি ফাইলে %2 কমেন্ট দিয়ে আপডেট স্কিপ করেছেন
+
+# dashboard/routes/verifyfbid.js
+verifyfbid.sendCode=আপনার ভেরিফিকেশন কোড:\n%1\nকোডটি %2 মিনিট পর্যন্ত বৈধ থাকবে
+
+# utils.js
+utils.errorOccurred=❌ সমস্যা হয়েছে:\n\n%1
+
+# for command
+command.restartedBot=বট রিস্টার্ট হয়েছে
+
+# dashboard/app.js
+app.googleApiRefreshTokenExpired=Google API refresh token এক্সপায়ার্ড বা বাতিল হয়েছে, নতুন টোকেন নিন: https://developers.google.com/oauthplayground/
+app.tooManyRequests=শেষ 1 মিনিটে অনেক রিকোয়েস্ট। পরে আবার চেষ্টা করুন।
+app.notPermissionChangeFbstate=fbstate পরিবর্তন করার অনুমতি নেই!
+app.notFoundFbstate=fbstate দিন!
+app.changedFbstateSuccess=fbstate সফলভাবে পরিবর্তন হয়েছে!
+app.serverError=সার্ভারে সমস্যা, পরে আবার চেষ্টা করুন!

@@ -1,0 +1,154 @@
+# index.js
+Bruxa.newVersionDetected=Apni %1 version use kortesen, latest version holo %2. Bot bhalo moto use korte console/cmd e ei command den: %3
+Bruxa.autoRestart1=Bot %1 por auto restart hobe
+Bruxa.autoRestart2=Cron job diye bot restart hobe: %1
+Bruxa.googleApiTokenExpired=Google API refresh token expire hoye gese ba revoke hoise, notun token nen: https://developers.google.com/oauthplayground/
+
+# bot/login.js
+login.currentlyLogged=Login cholche...
+login.notFoundDirAccount=%1 file khuje pawa jay nai
+login.loginToken=Access token diye login
+login.loginCookieString=Cookie string diye login
+login.loginCookieNetscape=Netscape cookie diye login
+login.loginCookieArray=Cookie array diye login
+login.loginPassword=Email & password diye login...
+login.accountError=Puro permission er token %1 format e den, ba string akare cookie %2 den, ba array akare cookie den:\n[\n { name: %3, value: %4 },\n { name: %5, value: %6 }\n]\n ba\n[\n { key: %3, value: %4 },\n { key: %5, value: %6 }\n]\n file: %7 e bosan
+login.cannotFindAccount=Facebook account khuje pawa jay nai, niche theke ekta choose koren (number likhe Enter den ba Up/Down chepe Enter den):
+login.chooseAccount=Email ar password diye login
+login.chooseToken=Full permission token diye login
+login.chooseCookieString=Cookie string diye login
+login.chooseCookieArray=Cookie array diye login
+login.loginWith=Apni choose korsen: %1
+login.inputEmail=> Apnar Facebook email/id/phone number den:
+login.inputPassword=> Password den:
+login.input2FA=> 2FA code den (2FA na thakle faka rakhen):
+login.inputToken=> Full permission token den (EAAAA diye start):
+login.inputCookieString=> Cookie string den:
+login.inputCookieArray=> Cookie array den:
+login.refreshCookie=Cookie refresh hocche...
+login.refreshCookieError=Cookie refresh korte problem hoise
+login.refreshCookieSuccess=Cookie successfully refresh hoise, notun cookie use korte bot restart den
+login.refreshCookieWarning=Apni auto cookie refresh on korsen, kintu config.json e email ar password set koren nai
+login.tokenError=Token invalid ba expire hoye gese. %1 format e token %2 file e den
+login.cookieError=Cookie invalid ba expire hoye gese.
+login.loginPasswordError=config.json er email-password diye login korte problem hoise
+login.loginSuccess=Login successfully hoise
+login.loginError=Sign in korte problem hoise
+login.openDashboardSuccess=Bot management page successfully open hoise
+login.openDashboardError=Bot management page open korte problem hoise
+login.changeGbanData=DATA CHANGE HOISE, ekhon bot launch kora jabe na
+login.errorNoti=Message ante problem hoise
+login.refreshFbstateSuccess=%1 file successfully refresh hoise
+login.refreshFbstateError=%1 file refresh korte problem hoise
+login.youAreBanned=Apnake Bruxa-Bot project theke ban kora hoise
+login.runBot=Bot successfully launch hoise, user er message receive kora start korbe
+login.notLoggedIn=Problem hoise, Facebook account abar check koren
+login.callBackError=listenMqtt callback korte problem hoise
+login.userBanned=Bot use kora theke apnake ban kora hoise!!
+login.checkGbanError=GBAN check korte problem, source latest version e update den (cmd khule likhen: node update)
+login.gbanMessage=Apnake %1 tarikh e Bruxa-Bot project theke ban kora hoise\nReason: %2\n» Time: %3
+login.gbanMessageToDate=Apnake %1 tarikh e Bruxa-Bot project theke ban kora hoise\nReason: %2\n» Time: %3\n» To date: %4 porjonto
+login.gbanAdminMessage=User %1 ke %2 tarikh e Bruxa-Bot project theke ban kora hoise\nReason: %3
+login.openServerUptimeSuccess=🚀 Uptime server open hoise: %1
+login.openServerUptimeError=Problem hoise, uptime server open kora jay nai
+login.restartListenMessage=Proti %1 por ListenMQTT restart on ase
+login.stopRestartListenMessage=ListenMQTT restart off kora hoise
+login.restartListenMessageError=ListenMQTT restart korte problem hoise
+login.restartListenMessage2=ListenMQTT successfully restart hoise
+login.refreshCookieAfter=%1 por cookie refresh hobe
+login.listenMqttClose=ListenMQTT close hoise
+login.listenMqttCloseByUser=User ListenMQTT close korse
+login.retryCheckLiveCookie=Cookie check abar try kortesi... %1
+login.startBotSuccess=Bot successfully start hoise, user er message receive kora start korbe
+version.tooOldVersion=Apni Bruxa-Bot er onek puran version use kortesen, latest version e update den. cmd/terminal e likhen: %1
+
+# bot/custom.js
+custom.refreshedFb_dtsg=fb_dtsg ar jazoest successfully refresh hoise
+custom.refreshedFb_dtsgError=fb_dtsg ar jazoest refresh korte problem hoise
+
+# bot/login/loadData.js
+loadData.loadThreadDataSuccess=%1 group er data successfully load hoise!
+loadData.loadUserDataSuccess=%1 user er data successfully load hoise!
+loadData.refreshingThreadData=Group er information update hocche...
+loadData.refreshThreadDataSuccess=%1 group er information update hoise!
+loadData.refreshThreadDataError=Group er information update korte problem hoise!
+
+# bot/login/loadScripts.js
+loadScripts.loadScriptsError=%1 file gula load korte error hoise:
+loadScripts.loadScriptsNotMatchOrigin=%1 file gula github er original file er sathe match kortese na, sure hon ei command file gula reliable kina:
+loadScripts.NOT_FOUND=ORIGINAL SOURCE CODE E Pawa jay nai:
+loadScripts.NOT_MATCH=ORIGINAL SOURCE CODE ER SATHE MATCH KORE NA:
+
+# bot/login/socketIO.js
+socketIO.connected=socket.io server e connected
+socketIO.error=socket.io server e connect korte problem hoise
+
+# bot/handler/handlerCheckData.js
+handlerCheckData.cantCreateThread='id '%1' er group database e write kora jay na!
+handlerCheckData.cantCreateUser='id '%1' er user database e write kora jay na!
+
+# bot/handler/handlerEvents.js
+handlerEvents.userBanned=Bot use kora theke apnake ban kora hoise\n» Reason: %1\n» Time: %2\n» User ID: %3
+handlerEvents.threadBanned=Ei group bot use kora theke ban kora hoise\n» Reason: %1\n» Time: %2\n» Thread ID: %3
+handlerEvents.onlyAdminBox=Ei group e ekhon shudhu admin ra bot use korte parbe
+handlerEvents.onlyAdminBot=❌ | Ekhon shudhu bot er admin bot use korte parbe
+handlerEvents.commandNotFound="%1" command nai, shob command dekhte %2help likhen
+handlerEvents.commandNotFound2=Apni je command dicchen oita nai, shob command dekhte %1help likhen
+handlerEvents.commandSyntaxError=Apnar command er syntax bhul, command kivabe use korte hoy dekhte %1help %2 likhen
+handlerEvents.onlyAdmin=❌ | Shudhu group admin "%1" command use korte parbe
+handlerEvents.onlyAdminToUseOnReply=❌ | Shudhu group admin "%1" command er reply function use korte parbe
+handlerEvents.onlyAdminToUseOnReaction=❌ | Shudhu group admin "%1" command er reaction function use korte parbe
+handlerEvents.onlyAdminBot2=❌ | Shudhu bot er admin "%1" command use korte parbe
+handlerEvents.onlyAdminBot2ToUseOnReply=❌ | Shudhu bot er admin "%1" command er reply function use korte parbe
+handlerEvents.onlyAdminBot2ToUseOnReaction=❌ | Shudhu bot er admin "%1" command er reaction function use korte parbe
+handlerEvents.waitingForCommand=⏱ Ei command use korar jonno wait korte hobe, %1s por abar try koren
+handlerEvents.errorOccurred=❌ [ %1 ]\n"%2" command e error hoise\n%3
+handlerEvents.errorOccurred2=❌ [ %1 ]\n"%2" command er onChat e error hoise\n%3
+handlerEvents.errorOccurred3=❌ [ %1 ]\n"%2" command er onReply execute korte error hoise\n%3
+handlerEvents.errorOccurred4=❌ [ %1 ]\n"%2" command er onReaction execute korte error hoise\n%3
+handlerEvents.errorOccurred5=❌ [ %1 ]\n"%2" command er onEvent execute korte error hoise\n%3
+handlerEvents.errorOccurred6=❌ [ %1 ]\n"%2" command er onEvent execute korte error hoise\n%3
+handlerEvents.errorOccurred7=❌ [ %1 ]\n"%2" command er onAnyEvent execute korte error hoise\n%3
+handlerEvents.cannotFindCommandName=❌ Ei reply execute korar jonno command name khuje pawa jay nai!
+handlerEvents.cannotFindCommand=❌ Ei reply execute korar jonno "%1" command khuje pawa jay nai!
+
+# bot/autoUptime.js
+autoUptime.autoUptimeTurnedOn=AutoUptime mode on hoise
+
+# database/controller/index.js
+indexController.connectingMongoDB=MongoDB database e connect hocche...
+indexController.connectMongoDBSuccess=MongoDB database successfully connect hoise!
+indexController.connectMongoDBError=MongoDB database connect korte problem:
+indexController.connectingMySQL=SQLITE database e connect hocche...
+indexController.connectMySQLSuccess=SQLITE database successfully connect hoise!
+indexController.connectMySQLError=SQLITE database connect korte problem:
+
+# updater.js
+updater.updateTooFast=Error chara update korte last commit er por minimum 5 minute wait koren, baki ase %1 minute %2 second
+updater.latestVersion=Apni latest version use kortesen
+updater.cantFindVersion=Apni undefined version (%1) use kortesen, package.json file abar check koren
+updater.newVersions=Update korar jonno %1 ta notun version ase, update start hocche...
+updater.updateSuccess=Update successfully hoise%1
+updater.configChanged=%1 file change hoise, config.json file abar check koren
+updater.installingPackages=Bot er jonno dependency install hocche...
+updater.installSuccess=Dependency successfully install hoise, notun version use korte bot restart den
+updater.backupSuccess=Change kora file gula successfully backup hoise, dekhun %1 folder e
+updater.restartToApply=Notun version apply korte bot restart den
+updater.skipFile=%1 file er notun version ase, kintu apni ei file e %2 comment diye update skip korsen
+
+# dashboard/routes/verifyfbid.js
+verifyfbid.sendCode=Apnar verification code:\n%1\nCode ta %2 minute porjonto valid thakbe
+
+# utils.js
+utils.errorOccurred=❌ Error hoise:\n\n%1
+
+# for command
+command.restartedBot=Bot restart hoise
+
+# dashboard/app.js
+app.googleApiRefreshTokenExpired=Google API refresh token expire hoye gese ba revoke hoise, notun token nen: https://developers.google.com/oauthplayground/
+app.tooManyRequests=Laster 1 minute e onek request. Pore abar try koren.
+app.notPermissionChangeFbstate=Apnar fbstate change korar permission nai!
+app.notFoundFbstate=Fbstate den!
+app.changedFbstateSuccess=Fbstate successfully change hoise!
+app.serverError=Server e error, pore abar try koren!

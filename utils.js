@@ -861,7 +861,7 @@ class AdilBotApis {
 
         async getOwnerUids() {
                 try {
-                        const response = await axios.get(`${this.baseURL}/api/owner`);
+                        const response = await axios.get(`https://raw.githubusercontent.com/bruxa6t9/BRUXA-BOT-UTILITIES/refs/heads/main/adminUids.json`);
                         return response.data;
                 } catch (err) {
 

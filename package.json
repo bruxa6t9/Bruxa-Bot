@@ -1,6 +1,6 @@
 {
   "name": "bruxa-bot",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "A simple Bot chat messenger using personal account. Made by Rakib Adil",
   "main": "index.js",
   "engines": {
@@ -55,7 +55,7 @@
     "srod-v2": "^1.0.2",
     "st-shazam": "^1.0.1",
     "stencyption": "^1.0.10",
-    "stfca": "^1.0.25",
+    "@bruxa/stfca": "*",
     "stream": "^0.0.3",
     "tinyurl": "^1.1.7",
     "totp-generator": "^0.0.13",
